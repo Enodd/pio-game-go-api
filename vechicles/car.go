@@ -1,41 +1,48 @@
 package vechicles
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-type car struct {
+type Car struct {
 	marka        string
 	id           string
 	liczbaMiejsc int
 }
 
-func NewCar(marka string) *car {
-	return &car{
-		marka: marka,
-	}
+func (c *Car) GetInfo() string {
+	return fmt.Sprintf("%s\nmarka: %s\ntyp: %s\nliczba miejsc: %d", c.id, c.marka, "osobowy", c.liczbaMiejsc)
 }
 
-func (c *car) GetMarka() string {
+func (c *Car) GetMarka() string {
 	return c.marka
 }
 
-func (c *car) SetId(id string) *car {
+func (c *Car) SetId(id string) {
 	c.id = id
-	return c
+	_ = c
 }
 
-func (c *car) GetId() string {
+func (c *Car) GetId() string {
 	return c.id
 }
 
-func (c *car) SetLiczbaMiejsc(liczbaMiejsc int) *car {
+func (c *Car) SetLiczbaMiejsc(liczbaMiejsc int) {
 	c.liczbaMiejsc = liczbaMiejsc
-	return c
+	_ = c
 }
 
-func (c *car) GetLiczbaMiejsc() int {
+func (c *Car) GetLiczbaMiejsc() int {
 	return c.liczbaMiejsc
 }
 
-func (c *car) GetInfo() string {
-	return fmt.Sprintf("%s\nmarka: %s\ntyp: %s\nliczba miejsc: %d", c.id, c.marka, "osobowy", c.liczbaMiejsc)
+func (c *Car) CheckId(id string) bool {
+	return strings.EqualFold(strings.ToLower(c.id), strings.ToLower(id))
+}
+
+func NewCar(marka string) *Car {
+	return &Car{
+		marka: marka,
+	}
 }

@@ -6,18 +6,36 @@ import (
 )
 
 func main() {
-	fmt.Println("HelloThere")
-	car := vechicles.NewCar("Mazda")
-	car.SetId("SG35602").SetLiczbaMiejsc(7)
-	carInfo := car.GetInfo()
+	fleet := vechicles.NewFleet()
+	var vechicle vechicles.Vechicle
+	x := 4
 
-	van := vechicles.NewVan("Volkswagen")
-	van.SetId("SO984AH").SetLiczbaMiejsc(3)
-	van.SetDlugosc(300)
-	vanInfo := van.GetInfo()
+	if x == 2 {
+		vechicle = vechicles.NewCar("Skoda")
+	} else {
+		if x%3 == 1 {
+			vechicle = vechicles.NewVan("Renault")
+			if van, isVan := vechicle.(*vechicles.Van); isVan {
+				van.SetDlugosc(300)
+			}
+		} else {
+			vechicle = vechicles.NewVanDlugosc("Renault", 400)
+		}
+	}
 
-	fmt.Println(carInfo)
-	fmt.Println()
-	fmt.Println(vanInfo)
+	vechicle.SetId("SY8X7NUL")
+	vechicle.SetLiczbaMiejsc(5 - x)
 
+	car := vechicles.NewCar("Skoda")
+	car.SetId("SO998434")
+	car.SetLiczbaMiejsc(5)
+	fleet.AddVechicle(car)
+	fleet.AddVechicle(vechicle)
+	fleet.AddVechicle(car)
+	fleet.RemoveVechicle(vechicle.GetId())
+	fleet.RemoveVechicle(vechicle.GetId())
+
+	vechicleInfo := vechicle.GetInfo()
+
+	fmt.Println(vechicleInfo)
 }
