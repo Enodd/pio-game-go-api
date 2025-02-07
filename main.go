@@ -2,7 +2,7 @@ package main
 
 import (
 	"net/http"
-	con "pioApi/controllers"
+	controllers "pioApi/controllers"
 	_ "pioApi/docs"
 
 	"github.com/gin-gonic/gin"
@@ -12,14 +12,11 @@ import (
 
 func setupRouter() *gin.Engine {
 	r := gin.Default()
-	uc := con.NewUserController()
+	uc := controllers.NewUserController()
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	users := r.Group("/users")
-	{
-		users.GET(":id", uc.GetUser)
-	}
+	uc.InitRoutes(r)
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")

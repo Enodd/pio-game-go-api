@@ -18,6 +18,13 @@ func NewUserController() *userController {
 	return &userController{}
 }
 
+func (uc *userController) InitRoutes(r *gin.Engine) {
+	users := r.Group("/users")
+	{
+		users.GET(":id", uc.GetUser)
+	}
+}
+
 // GetUser returns user with given id
 //
 //	@Summary		returns user
