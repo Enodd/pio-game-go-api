@@ -1,0 +1,105 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Pio game rewrtitten as api",
+        "title": "Pio game api",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/users/{id}": {
+            "get": {
+                "description": "returns user with given id",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "returns user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of user",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "updates user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "updates user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes user of a given id",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Deletes user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of user",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "bool"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "OpenAPI",
+        "url": "https://swagger.io/resources/open-api/"
+    }
+}

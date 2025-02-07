@@ -1,0 +1,70 @@
+basePath: /
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact: {}
+  description: Pio game rewrtitten as api
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Pio game api
+  version: "1.0"
+paths:
+  /users/{id}:
+    delete:
+      description: Deletes user of a given id
+      parameters:
+      - description: id of user
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: bool
+      summary: Deletes user
+      tags:
+      - users
+    get:
+      description: returns user with given id
+      parameters:
+      - description: id of user
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: returns user
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: updates user
+      parameters:
+      - in: formData
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: updates user
+      tags:
+      - users
+swagger: "2.0"
