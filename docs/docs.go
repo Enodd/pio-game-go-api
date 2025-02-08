@@ -19,6 +19,29 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/users/": {
+            "get": {
+                "description": "returns list of all users in database",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "returns list of users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.User"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users/{id}": {
             "get": {
                 "description": "returns user with given id",
@@ -47,23 +70,22 @@ const docTemplate = `{
                     }
                 }
             },
-            "put": {
-                "description": "updates user",
-                "consumes": [
-                    "application/json"
-                ],
+            "post": {
+                "description": "returns user with given id",
                 "produces": [
-                    "application/json"
+                    "text/plain"
                 ],
                 "tags": [
                     "users"
                 ],
-                "summary": "updates user",
+                "summary": "returns user",
                 "parameters": [
                     {
-                        "type": "string",
-                        "name": "name",
-                        "in": "formData"
+                        "type": "integer",
+                        "description": "id of user",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -97,9 +119,58 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "bool"
+                            "type": "string"
                         }
                     }
+                }
+            },
+            "patch": {
+                "description": "updates user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "updates user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user data",
+                        "name": "user",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ent.User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Password holds the value of the \"password\" field.",
+                    "type": "string"
+                },
+                "username": {
+                    "description": "Username holds the value of the \"username\" field.",
+                    "type": "string"
                 }
             }
         }

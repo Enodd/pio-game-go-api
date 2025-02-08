@@ -1,4 +1,17 @@
 basePath: /
+definitions:
+  ent.User:
+    properties:
+      id:
+        description: ID of the ent.
+        type: string
+      password:
+        description: Password holds the value of the "password" field.
+        type: string
+      username:
+        description: Username holds the value of the "username" field.
+        type: string
+    type: object
 externalDocs:
   description: OpenAPI
   url: https://swagger.io/resources/open-api/
@@ -12,6 +25,21 @@ info:
   title: Pio game api
   version: "1.0"
 paths:
+  /users/:
+    get:
+      description: returns list of all users in database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.User'
+            type: array
+      summary: returns list of users
+      tags:
+      - users
   /users/{id}:
     delete:
       description: Deletes user of a given id
@@ -27,7 +55,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: bool
+            type: string
       summary: Deletes user
       tags:
       - users
@@ -49,13 +77,15 @@ paths:
       summary: returns user
       tags:
       - users
-    put:
+    patch:
       consumes:
       - application/json
       description: updates user
       parameters:
-      - in: formData
-        name: name
+      - description: user data
+        in: formData
+        name: user
+        required: true
         type: string
       produces:
       - application/json
@@ -65,6 +95,24 @@ paths:
           schema:
             type: string
       summary: updates user
+      tags:
+      - users
+    post:
+      description: returns user with given id
+      parameters:
+      - description: id of user
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: returns user
       tags:
       - users
 swagger: "2.0"
