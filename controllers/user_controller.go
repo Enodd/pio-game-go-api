@@ -22,6 +22,8 @@ func (uc *userController) InitRoutes(r *gin.Engine) {
 	users := r.Group("/users")
 	{
 		users.GET(":id", uc.GetUser)
+		users.PATCH(":id", uc.UpdateUser)
+		users.DELETE(":id", uc.DeleteUser)
 	}
 }
 
@@ -69,7 +71,7 @@ func (uc *userController) DeleteUser(ctx *gin.Context) {
 //	@Produce		json
 //	@Param			user formData User true "user data"
 //	@Success		200	{string}	string
-//	@Router			/users/{id} [put]
+//	@Router			/users/{id} [patch]
 func (uc *userController) UpdateUser(ctx *gin.Context) {
 	ctx.String(http.StatusOK, "Endpoint to be implemented")
 }
