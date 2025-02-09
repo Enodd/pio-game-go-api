@@ -5,6 +5,8 @@ import (
 	"pioApi/ent"
 	"pioApi/models"
 	repositories "pioApi/repositories"
+
+	"github.com/google/uuid"
 )
 
 type UserService struct {
@@ -20,11 +22,11 @@ func (us *UserService) SetRepository(repository *repositories.UserRepository) {
 }
 
 func (us *UserService) CreateUser(user models.User, ctx context.Context, client *ent.Client) (bool, error) {
-	success, err := us.repository.CreateUser(user, ctx, client)
+	err := us.repository.CreateUser(user, ctx, client)
 	if err != nil {
 		return false, err
 	}
-	return success, nil
+	return true, nil
 }
 
 func (us *UserService) GetUsers(ctx context.Context, client *ent.Client) ([]*ent.User, error) {
@@ -33,4 +35,14 @@ func (us *UserService) GetUsers(ctx context.Context, client *ent.Client) ([]*ent
 		return nil, err
 	}
 	return users, nil
+}
+
+func (us *UserService) GetUser(id uuid.UUID, ctx context.Context, client *ent.Client) (*ent.User, error) {
+	user, err := us.repository.GetUser(id, ctx, client)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
 }

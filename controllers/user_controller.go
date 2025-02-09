@@ -2,9 +2,7 @@ package controllers
 
 import (
 	"context"
-	"errors"
 	"net/http"
-	"strconv"
 
 	"pioApi/config"
 	_ "pioApi/ent"
@@ -12,6 +10,7 @@ import (
 	services "pioApi/services"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type userController struct {
@@ -65,19 +64,18 @@ func (uc *userController) GetUsers(ctx *gin.Context) {
 //	@Tags			users
 //	@Produce		plain
 //	@Param			id	path		int	true	"id of user"
-//	@Success		200	{string}	string
+//	@Success		200	{string} uuid.UUID
 //	@Router			/users/{id} [get]
 func (uc *userController) GetUser(ctx *gin.Context) {
+	context := context.Background()
 	id := ctx.Param("id")
-	aid, err := strconv.Atoi(id)
+	uid, err := uuid.Parse(id)
 	if err != nil {
-		ctx.Error(errors.New("id wasnt provided"))
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Provided invalid id"})
 	}
-	if aid == 0 {
-		ctx.Error(errors.New("cannot get users"))
-	}
-	response := "Jeff"
-	ctx.JSON(http.StatusOK, response)
+	user, err := uc.service.GetUser(uid, context, config.DB)
+
+	ctx.JSON(http.StatusOK, user)
 }
 
 // CreateUser returns user with given id

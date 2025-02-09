@@ -29,6 +29,7 @@ func (User) Fields() []ent.Field {
 	}
 }
 
+// relacje
 // Edges of the User.
 func (User) Edges() []ent.Edge {
 	return nil
